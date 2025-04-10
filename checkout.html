@@ -1016,15 +1016,15 @@ function backToForm() {
   // Go back to page 2 (keeping the entered data)
   showPage("page2");
 }
-  </script>
-  <script>
+<script>
   function sendHeight() {
     const height = document.body.scrollHeight;
-    parent.postMessage({ type: "resize", height: height }, "*");
+    window.parent.postMessage({ type: "resize", height }, "*");
   }
 
   window.onload = sendHeight;
   window.onresize = sendHeight;
+  setInterval(sendHeight, 500); // update height regularly
 </script>
  </body>
 </html>
