@@ -127,10 +127,10 @@
  </head>
  <body>
   <h2>
-   Benefit Finder: Find Out Which Ones You May Qualify For
+   Find Out Which U.S. Benefits You May Qualify For
   </h2>
   <p>
-   This quick questionnaire will help match you with housing, food, health, and income programs.
+   This quick questionnaire will help match you with housing, food, health, and income programs. All information is processed locally and not stored or transmitted.
   </p>
   <div class="progress-indicator">
    <div class="progress-step active" id="step1-indicator">
@@ -600,51 +600,33 @@
     Please complete all required fields before proceeding.
    </div>
    <div class="nav-buttons" id="nav-buttons">
-<button id="next-button" type="button">
+    <button id="next-button" onclick="validateAndProceed()" type="button">
      Next Step
     </button>
    </div>
   </form>
   <script>
- document.addEventListener("DOMContentLoaded", function () {
+   document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("benefit-form");
   if (!form) return;
   
-  // Set up initial event listeners
-  setupEventListeners();
+  // Set up event listeners
+  document.getElementById("next-button").addEventListener("click", validateAndProceed);
+  document.getElementById("start-over")?.addEventListener("click", resetForm);
+  document.getElementById("back-to-form")?.addEventListener("click", backToForm);
   
   // Set up form field validation
   setupFormValidation();
 });
 
-function setupEventListeners() {
-  // Set up main navigation buttons
-  const nextButton = document.getElementById("next-button");
-  if (nextButton) {
-    nextButton.addEventListener("click", validateAndProceed);
-  }
-  
-  const startOverButton = document.getElementById("start-over");
-  if (startOverButton) {
-    startOverButton.addEventListener("click", resetForm);
-  }
-  
-  const backToFormButton = document.getElementById("back-to-form");
-  if (backToFormButton) {
-    backToFormButton.addEventListener("click", backToForm);
-  }
-}
-
 function setupFormValidation() {
   // Add input validation for number fields
   const incomeField = document.getElementById("income");
-  if (incomeField) {
-    incomeField.addEventListener("input", function() {
-      if (this.value < 0) {
-        this.value = 0;
-      }
-    });
-  }
+  incomeField.addEventListener("input", function() {
+    if (this.value < 0) {
+      this.value = 0;
+    }
+  });
   
   // Validate all form fields when they change
   const formFields = document.querySelectorAll("select, input");
@@ -724,32 +706,19 @@ function showPage(pageId) {
   
   // Show selected page
   document.getElementById(pageId).style.display = "block";
-  document.getElementById("inline-error").style.display = "none";
   
   // Update navigation buttons
-  const navButtons = document.getElementById("nav-buttons");
-  
   if (pageId === "page1") {
     document.getElementById("step1-indicator").classList.add("active");
-    navButtons.innerHTML = '<button type="button" id="next-button">Next Step</button>';
-    navButtons.style.display = "block";
+    document.getElementById("nav-buttons").innerHTML = '<button type="button" id="next-button" onclick="validateAndProceed()">Next Step</button>';
+    document.getElementById("nav-buttons").style.display = "block";
   } else if (pageId === "page2") {
     document.getElementById("step2-indicator").classList.add("active");
-    navButtons.innerHTML = '<button type="button" class="secondary" id="back-button">Back</button><button type="button" id="submit-button">See My Benefits</button>';
-    navButtons.style.display = "block";
+    document.getElementById("nav-buttons").innerHTML = '<button type="button" class="secondary" onclick="showPage(\'page1\')">Back</button><button type="button" id="submit-button" onclick="validateAndProceed()">See My Benefits</button>';
+    document.getElementById("nav-buttons").style.display = "block";
   } else if (pageId === "results-page") {
     document.getElementById("results-indicator").classList.add("active");
-    navButtons.style.display = "none";
-  }
-  
-  // Re-attach event listeners to the new buttons
-  if (pageId === "page1") {
-    document.getElementById("next-button").addEventListener("click", validateAndProceed);
-  } else if (pageId === "page2") {
-    document.getElementById("back-button").addEventListener("click", function() {
-      showPage("page1");
-    });
-    document.getElementById("submit-button").addEventListener("click", validateAndProceed);
+    document.getElementById("nav-buttons").style.display = "none";
   }
 }
 
@@ -1033,8 +1002,6 @@ function resetForm() {
     message.style.display = "none";
   });
   
-  document.getElementById("inline-error").style.display = "none";
-  
   // Show first page
   showPage("page1");
   
@@ -1049,5 +1016,6 @@ function backToForm() {
   // Go back to page 2 (keeping the entered data)
   showPage("page2");
 }
+  </script>
  </body>
 </html>
