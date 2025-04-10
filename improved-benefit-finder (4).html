@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <title>Benefit Finder – Find Your Eligible Programs</title>
+  <style>
+   body {
+      font-family: Arial, sans-serif;
+      max-width: 750px;
+      margin: auto;
+      padding: 30px;
+      background-color: #f9f9f9;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    h2, h3, h4 {
+      margin-top: 30px;
+      color: #2c3e50;
+    }
+    button {
+      padding: 12px 20px;
+      background-color: #EC6805;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-right: 10px;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #d55a00;
+    }
+    button.secondary {
+      background-color: #95a5a6;
+    }
+    button.secondary:hover {
+      background-color: #7f8c8d;
+    }
+    .nav-buttons {
+      margin-top: 30px;
+    }
+    .form-page {
+      background-color: white;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .progress-indicator {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+    .progress-step {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      background-color: #ecf0f1;
+      position: relative;
+    }
+    .progress-step.active {
+      background-color: #EC6805;
+      color: white;
+      font-weight: bold;
+    }
+    .results-section {
+      background-color: white;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-top: 30px;
+    }
+    .benefit-category {
+      margin-bottom: 25px;
+    }
+    .privacy-notice {
+      font-size: 14px;
+      color: #7f8c8d;
+      margin-top: 30px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .error-message {
+      color: #e74c3c;
+      font-size: 14px;
+      margin-top: -10px;
+      margin-bottom: 15px;
+      display: none;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    .reset-button {
+      background-color: #e74c3c;
+    }
+    .reset-button:hover {
+      background-color: #c0392b;
+    }
+    a {
+      color: #EC6805;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+  <meta name="description" content="Find U.S. government benefits you may qualify for based on your personal situation"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+ </head>
+ <body>
+  <h2>Find Out Which U.S. Benefits You May Qualify For</h2>
+  <p>This quick questionnaire will help match you with housing, food, health, and income programs. All information is processed locally and not stored or transmitted.</p>
+  
+  <div class="progress-indicator">
+    <div class="progress-step active" id="step1-indicator">Step 1: Basic Information</div>
+    <div class="progress-step" id="step2-indicator">Step 2: Additional Details</div>
+    <div class="progress-step" id="results-indicator">Results</div>
+  </div>
+
+  <form id="benefit-form" aria-live="polite">
+   <div id="page1" class="form-page">
+    <h3>Step 1: Basic Information</h3>
+    
+    <label for="age">Your Age:</label>
+    <select id="age" required aria-required="true">
+     <option value="">-- Select --</option>
+     <option value="Under 18">Under 18</option>
+     <option value="18-24">18–24</option>
+     <option value="25-34">25–34</option>
+     <option value="35-44">35–44</option>
+     <option value="45-54">45–54</option>
+     <option value="55-64">55–64</option>
+     <option value="65 or older">65 or older</option>
+    </select>
+    <div id="age-error" class="error-message">Please select your age range</div>
+    
+    <label for="marital-status">What is your current marital status?</label>
+    <select id="marital-status" required aria-required="true">
+     <option value="">-- Select --</option>
+     <option value="single">Single</option>
+     <option value="married">Married</option>
+     <option value="divorced">Divorced</option>
+     <option value="widowed">Widowed</option>
+     <option value="separated">Separated</option>
+    </select>
+    <div id="marital-status-error" class="error-message">Please select your marital status</div>
+    
+    <label for="state">Select Your U.S. State:</label>
+    <select id="state" required aria-required="true">
+     <option value="">-- Select a state --</option>
+     <option value="Alabama">Alabama</option>
+     <option value="Alaska">Alaska</option>
+     <option value="Arizona">Arizona</option>
+     <option value="Arkansas">Arkansas</option>
+     <option value="California">California</option>
+     <option value="Colorado">Colorado</option>
+     <option value="Connecticut">Connecticut</option>
+     <option value="Delaware">Delaware</option>
+     <option value="Florida">Florida</option>
+     <option value="Georgia">Georgia</option>
+     <option value="Hawaii">Hawaii</option>
+     <option value="Idaho">Idaho</option>
+     <option value="Illinois">Illinois</option>
+     <option value="Indiana">Indiana</option>
+     <option value="Iowa">Iowa</option>
+     <option value="Kansas">Kansas</option>
+     <option value="Kentucky">Kentucky</option>
+     <option value="Louisiana">Louisiana</option>
+     <option value="Maine">Maine</option>
+     <option value="Maryland">Maryland</option>
+     <option value="Massachusetts">Massachusetts</option>
+     <option value="Michigan">Michigan</option>
+     <option value="Minnesota">Minnesota</option>
+     <option value="Mississippi">Mississippi</option>
+     <option value="Missouri">Missouri</option>
+     <option value="Montana">Montana</option>
+     <option value="Nebraska">Nebraska</option>
+     <option value="Nevada">Nevada</option>
+     <option value="New Hampshire">New Hampshire</option>
+     <option value="New Jersey">New Jersey</option>
+     <option value="New Mexico">New Mexico</option>
+     <option value="New York">New York</option>
+     <option value="North Carolina">North Carolina</option>
+     <option value="North Dakota">North Dakota</option>
+     <option value="Ohio">Ohio</option>
+     <option value="Oklahoma">Oklahoma</option>
+     <option value="Oregon">Oregon</option>
+     <option value="Pennsylvania">Pennsylvania</option>
+     <option value="Rhode Island">Rhode Island</option>
+     <option value="South Carolina">South Carolina</option>
+     <option value="South Dakota">South Dakota</option>
+     <option value="Tennessee">Tennessee</option>
+     <option value="Texas">Texas</option>
+     <option value="Utah">Utah</option>
+     <option value="Vermont">Vermont</option>
+     <option value="Virginia">Virginia</option>
+     <option value="Washington">Washington</option>
+     <option value="West Virginia">West Virginia</option>
+     <option value="Wisconsin">Wisconsin</option>
+     <option value="Wyoming">Wyoming</option>
+    </select>
+    <div id="state-error" class="error-message">Please select your state</div>
+    
+    <label for="income">Total Annual Household Income (USD):</label>
+    <input id="income" min="0" placeholder="e.g., 22000" required aria-required="true" type="number" step="100"/>
+    <div id="income-error" class="error-message">Please enter a valid income amount (0 or greater)</div>
+    
+    <label for="household">Number of People in Household:</label>
+    <select id="household" required aria-required="true">
+     <option value="">-- Select --</option>
+     <option value="1">1</option>
+     <option value="2">2</option>
+     <option value="3">3</option>
+     <option value="4">4</option>
+     <option value="5">5</option>
+     <option value="6">6</option>
+     <option value="7">7</option>
+     <option value="8">8</option>
+     <option value="9">9</option>
+     <option value="10">10</option>
+     <option value="10+">More than 10</option>
+    </select>
+    <div id="household-error" class="error-message">Please select your household size</div>
+    
+    <label for="employment">Employment Status:</label>
+    <select id="employment" required aria-required="true">
+     <option value="">-- Choose --</option>
+     <option value="employed">Employed Full-time</option>
+     <option value="part-time">Employed Part-time</option>
+     <option value="unemployed">Unemployed</option>
+     <option value="disabled">Unable to work due to disability</option>
+     <option value="retired">Retired</option>
+     <option value="student">Student</option>
+    </select>
+    <div id="employment-error" class="error-message">Please select your employment status</div>
+   </div>
+   
+   <div id="page2" class="form-page" style="display:none">
+    <h3>Step 2: Additional Details</h3>
+    
+    <label for="citizenship">Are you a U.S. citizen or someone legally allowed to live in the U.S.?</label>
+    <select id="citizenship" required aria-required="true">
+     <option value="">-- Select --</option>
+     <option value="yes">Yes</option>
+     <option value="no">No</option>
+    </select>
+    <div id="citizenship-error" class="error-message">Please answer this question</div>
+    
+    <label for="relative-benefits">Are you the spouse or child of someone receiving retirement or disability benefits?</label>
+    <select id="relative-benefits" required aria-required="true">
+     <option value="">-- Select --</option>
+     <option value="yes">Yes</option>
+     <option value="no">No</option>
+    </select>
+    <div id="relative-benefits-error" class="error-message">Please answer this question</div>
+    
+    <label for="caregiving-child">Are you taking care of a child whose parent is retired, disabled, or has passed away, and the child is under 16 or has a disability?</label>
+    <select id="caregiving-child" required aria-required="true">
+     <option value="">-- Select --</option>
+     <option value="yes">Yes</option>
+     <option value="no">No</option>
+    </select>
+    <div id="caregiving-child-error" class="error-message">Please answer this question</div>
+    
+    <label for="disability">Do you have a physical disability, mental health condition, or serious illness that limits your ability to work or function daily?</label>
+    <select id="disability" required aria-required="true">
+     <option value="">-- Select --</option>
+     <option value="yes">Yes</option>
+     <option value="no">No</option>
+    </select>
+    <div id="disability-error" class="error-message">Please answer this question</div>
+    
+    <label for="native-status">Do you identify as American Indian or Alaska Native?</label>
+    <select id="native-status" required aria-required="true">
+     <option value="">-- Select --</option>
+     <option value="yes">Yes</option>
+     <option value="no">No</option>
+    </select>
+    <div id="native-status-error" class="error-message">Please answer this question</div>
+    
+    <label for="veteran">Have you served in the U.S. Armed Forces (active duty)?</label>
+    <select id="veteran" required aria-required="true">
+     <option value="">-- Select --</option>
+     <option value="yes">Yes</option>
+     <option value="no">No</option>
+    </select>
+    <div id="veteran-error" class="error-message">Please answer this question</div>
+    
+    <label for="lost-family">Have you recently lost an immediate family member (parent, child, spouse)?</label>
+    <select id="lost-family" required aria-required="true">
+     <option value="">-- Select --</option>
+     <option value="yes">Yes</option>
+     <option value="no">No</option>
+    </select>
+    <div id="lost-family-error" class="error-message">Please answer this question</div>
+   </div>
+   
+   <div id="results-page" class="form-page" style="display:none">
+    <h3>Your Potential Benefits</h3>
+    <p>Based on the information you provided, you may qualify for the following benefits and programs. Please note that this is only a preliminary assessment. Final eligibility is determined when you apply through official channels.</p>
+    
+    <div id="results-content"></div>
+    
+    <div class="nav-buttons">
+      <button type="button" id="back-to-form" class="secondary">Back to Form</button>
+      <button type="button" id="start-over" class="reset-button">Start Over</button>
+    </div>
+    
+    <div class="privacy-notice">
+      <strong>Privacy Notice:</strong> This tool is for informational purposes only and does not guarantee eligibility for any program.
+    </div>
+   </div>
+   
+   <div id="nav-buttons" class="nav-buttons">
+    <button type="button" id="next-button" onclick="validateAndProceed()">Next Step</button>
+   </div>
+  </form>
+  
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("benefit-form");
+  if (!form) return;
+  
+  // Set up event listeners
+  document.getElementById("next-button").addEventListener("click", validateAndProceed);
+  document.getElementById("start-over")?.addEventListener("click", resetForm);
+  document.getElementById("back-to-form")?.addEventListener("click", backToForm);
+  
+  // Set up form field validation
+  setupFormValidation();
+});
+
+function setupFormValidation() {
+  // Add input validation for number fields
+  const incomeField = document.getElementById("income");
+  incomeField.addEventListener("input", function() {
+    if (this.value < 0) {
+      this.value = 0;
+    }
+  });
+  
+  // Validate all form fields when they change
+  const formFields = document.querySelectorAll("select, input");
+  formFields.forEach(field => {
+    field.addEventListener("change", function() {
+      validateField(this.id);
+    });
+  });
+}
+
+function validateField(fieldId) {
+  const field = document.getElementById(fieldId);
+  const errorElement = document.getElementById(`${fieldId}-error`);
+  
+  if (!field || !errorElement) return true;
+  
+  let isValid = field.value !== "";
+  
+  // Special validation for income field
+  if (fieldId === "income") {
+    isValid = field.value !== "" && !isNaN(field.value) && parseInt(field.value) >= 0;
+  }
+  
+  if (!isValid) {
+    errorElement.style.display = "block";
+    field.setAttribute("aria-invalid", "true");
+  } else {
+    errorElement.style.display = "none";
+    field.setAttribute("aria-invalid", "false");
+  }
+  
+  return isValid;
+}
+
+function validatePageFields(pageId) {
+  const page = document.getElementById(pageId);
+  if (!page) return true;
+  
+  const fields = page.querySelectorAll("select, input");
+  let isValid = true;
+  
+  fields.forEach(field => {
+    if (!validateField(field.id)) {
+      isValid = false;
+    }
+  });
+  
+  return isValid;
+}
+
+function validateAndProceed() {
+  if (document.getElementById("page1").style.display !== "none") {
+    if (validatePageFields("page1")) {
+      showPage("page2");
+    } else {
+      alert("Please complete all required fields before proceeding.");
+    }
+  } else {
+    if (validatePageFields("page2")) {
+      calculateBenefits();
+    } else {
+      alert("Please complete all required fields before proceeding.");
+    }
+  }
+}
+
+function showPage(pageId) {
+  // Hide all pages
+  document.getElementById("page1").style.display = "none";
+  document.getElementById("page2").style.display = "none";
+  document.getElementById("results-page").style.display = "none";
+  
+  // Reset progress indicators
+  document.getElementById("step1-indicator").classList.remove("active");
+  document.getElementById("step2-indicator").classList.remove("active");
+  document.getElementById("results-indicator").classList.remove("active");
+  
+  // Show selected page
+  document.getElementById(pageId).style.display = "block";
+  
+  // Update navigation buttons
+  if (pageId === "page1") {
+    document.getElementById("step1-indicator").classList.add("active");
+    document.getElementById("nav-buttons").innerHTML = '<button type="button" id="next-button" onclick="validateAndProceed()">Next Step</button>';
+    document.getElementById("nav-buttons").style.display = "block";
+  } else if (pageId === "page2") {
+    document.getElementById("step2-indicator").classList.add("active");
+    document.getElementById("nav-buttons").innerHTML = '<button type="button" class="secondary" onclick="showPage(\'page1\')">Back</button><button type="button" id="submit-button" onclick="validateAndProceed()">See My Benefits</button>';
+    document.getElementById("nav-buttons").style.display = "block";
+  } else if (pageId === "results-page") {
+    document.getElementById("results-indicator").classList.add("active");
+    document.getElementById("nav-buttons").style.display = "none";
+  }
+}
+
+function getFieldValue(id) {
+  const element = document.getElementById(id);
+  return element ? element.value : "";
+}
+
+function calculateBenefits() {
+  try {
+    // Get all form values
+    const state = getFieldValue("state");
+    const income = parseInt(getFieldValue("income")) || 0;
+    const household = parseInt(getFieldValue("household")) || 1;
+    const employment = getFieldValue("employment");
+    const citizenship = getFieldValue("citizenship");
+    const disability = getFieldValue("disability");
+    const veteran = getFieldValue("veteran");
+    const age = getFieldValue("age");
+    const nativeStatus = getFieldValue("native-status");
+    const lostFamily = getFieldValue("lost-family");
+    const caregivingChild = getFieldValue("caregiving-child");
+    const relativeBenefits = getFieldValue("relative-benefits");
+    
+    // Initialize benefit categories
+    let housing = [], food = [], health = [], incomeSupport = [], veterans = [], other = [];
+
+    // Define expansion states for Medicaid
+    const medicaidExpansionStates = ["California", "New York", "Oregon", "Colorado", "Washington", "Illinois", "Massachusetts", 
+                                    "Michigan", "Minnesota", "Connecticut", "Hawaii", "Vermont", "Maryland", "Delaware", 
+                                    "Rhode Island", "Kentucky", "New Jersey", "Arizona", "Arkansas", "Louisiana"];
+
+    // Housing benefits logic based on conditional logic structure
+    // Always available
+    housing.push("Public Housing");
+    
+    // Emergency Rental Assistance (specific states with high housing costs)
+    if (["California", "New York", "Texas", "Florida", "Illinois", "Arizona", "Nevada"].includes(state) && 
+        income <= 30000 && household >= 2) {
+      housing.push("Emergency Rental Assistance");
+    }
+    
+    // Native American specific housing
+    if (["Alaska", "Arizona", "New Mexico"].includes(state) && nativeStatus === "yes") {
+      housing.push("Home Loans for Native Americans");
+    }
+    
+    // Low Income Housing Tax Credit
+    if (income <= 45000) {
+      housing.push("Low-Income Housing Tax Credit");
+    }
+    
+    // Tribal Housing
+    if (nativeStatus === "yes") {
+      housing.push("Tribal Housing (NAHASDA)");
+    }
+    
+    // Housing for people with disabilities
+    if (disability === "yes") {
+      housing.push("Supportive Housing for People with Disabilities");
+    }
+    
+    // Section 202 for elderly
+    if (age === "65 or older" && income <= 40000) {
+      housing.push("Section 202 Supportive Housing for the Elderly");
+    }
+    
+    // Veterans housing
+    if (veteran === "yes") {
+      housing.push("VA Home Loan Guaranty");
+    }
+    
+    // Section 8 (blocked if not a citizen)
+    if (citizenship === "yes" && income <= 30000) {
+      housing.push("Housing Choice Voucher (Section 8)");
+    }
+    
+    // FHA Loans
+    if (income <= 80000) {
+      housing.push("FHA Loans");
+    }
+
+    // Food benefits logic
+    // Always show these
+    food.push("School Meals Assistance");
+    food.push("Emergency Food Help");
+    
+    // SNAP and WIC (blocked if not a citizen)
+    if (citizenship === "yes" && income <= 30000) {
+      food.push("SNAP (Food Stamps)");
+      if (household > 1) {
+        food.push("WIC (Women, Infants, and Children)");
+      }
+    }
+    
+    // Senior food program
+    if (age === "65 or older" && income <= 35000) {
+      food.push("Commodity Supplemental Food Program");
+    }
+
+    // Health coverage logic
+    // Medicaid and CHIP logic based on expansion state status
+    if (citizenship === "yes") {
+      if (medicaidExpansionStates.includes(state) && income <= 32000) {
+        health.push("Medicaid");
+        if (household > 1) {
+          health.push("Children's Health Insurance Program (CHIP)");
+        }
+      } else if (!medicaidExpansionStates.includes(state) && income <= 26000) {
+        // Non-expansion states with lower income threshold
+        if (household > 1) {
+          health.push("Children's Health Insurance Program (CHIP)");
+        }
+      }
+    }
+    
+    // Indian Health Service
+    if (nativeStatus === "yes") {
+      health.push("Indian Health Service");
+    }
+    
+    // Medicare for seniors
+    if (age === "65 or older") {
+      health.push("Medicare");
+    }
+    
+    // Medicare for people with disabilities
+    if (disability === "yes") {
+      health.push("Medicare for People with Disabilities");
+    }
+    
+    // VA Health Care
+    if (veteran === "yes") {
+      health.push("VA Health Care");
+    }
+
+    // Income support logic
+    // Unemployment Insurance (needs citizenship and unemployed status)
+    if (citizenship === "yes" && employment === "unemployed") {
+      incomeSupport.push("Unemployment Insurance");
+    }
+    
+    // Programs requiring citizenship and low income
+    if (citizenship === "yes" && income <= 28000) {
+      incomeSupport.push("Temporary Assistance for Needy Families (TANF)");
+      incomeSupport.push("Supplemental Security Income (SSI)");
+      incomeSupport.push("Job Training Programs");
+    }
+    
+    // Social Security benefits
+    if (lostFamily === "yes") {
+      incomeSupport.push("Social Security Survivors Benefits");
+    }
+    
+    if (disability === "yes") {
+      incomeSupport.push("Social Security Disability Insurance (SSDI)");
+    }
+    
+    if (age === "65 or older") {
+      incomeSupport.push("Social Security Retirement Benefits");
+    }
+    
+    if (caregivingChild === "yes") {
+      incomeSupport.push("Social Security Benefits for Children");
+      incomeSupport.push("TANF for Child Care");
+    }
+    
+    if (relativeBenefits === "yes") {
+      incomeSupport.push("SSA Dependent/Spousal Benefits");
+    }
+    
+    // Tribal TANF
+    if (nativeStatus === "yes") {
+      incomeSupport.push("Tribal TANF");
+    }
+
+    // Veterans benefits logic
+    if (veteran === "yes") {
+      veterans.push("VA Disability Compensation");
+      veterans.push("Veterans Pension");
+      veterans.push("VA Education and Training Benefits");
+      veterans.push("Veterans Burial Benefits");
+      
+      if (lostFamily === "yes") {
+        veterans.push("Dependency and Indemnity Compensation");
+      }
+    }
+
+    // Other benefits logic
+    if (income <= 45000) {
+      other.push("Earned Income Tax Credit");
+    }
+    
+    if (lostFamily === "yes") {
+      other.push("Funeral Assistance");
+    }
+    
+    other.push("General Tax Relief Programs");
+    
+    if (nativeStatus === "yes") {
+      other.push("Bureau of Indian Affairs Programs");
+    }
+
+    // Generate results HTML
+    let output = "";
+    
+    // Function to render each benefit category
+    const renderCategory = (title, list, icon) => {
+      if (list.length) {
+        output += `<div class="benefit-category">
+          <h4>${title}</h4>
+          <ul>`;
+        list.forEach(item => {
+          // Check if we have a link for this benefit
+          const links = {
+            "Housing Choice Voucher (Section 8)": "https://kpcbedge.com/steps-to-section-8/",
+            "Supportive Housing for People with Disabilities": "https://kpcbedge.com/hud-housing-programs-for-the-disabled/",
+            "SNAP (Food Stamps)": "https://kpcbedge.com/quick-guide-snap-eligibility-benefits/",
+            "WIC (Women, Infants, and Children)": "https://kpcbedge.com/enrolling-for-wic/",
+            "Medicaid": "https://kpcbedge.com/enrolling-medicaid-guide/",
+            "Children's Health Insurance Program (CHIP)": "https://kpcbedge.com/enrolling-for-chip/",
+            "Temporary Assistance for Needy Families (TANF)": "https://kpcbedge.com/tanf-benefits-eligibility/",
+            "Supplemental Security Income (SSI)": "https://kpcbedge.com/ssdi-and-ssi/",
+            "Unemployment Insurance": "https://kpcbedge.com/make-unemployment-claim/",
+            "Low-Income Housing Tax Credit": "https://kpcbedge.com/low-income-tax-credit/",
+            "FHA Loans": "https://kpcbedge.com/apply-fha-loan-requirements/",
+            "Funeral Assistance": "https://kpcbedge.com/hidden-benefits-you-might-qualify-for-money-saving-opportunities/",
+            "Emergency Rental Assistance": "https://kpcbedge.com/what-are-housing-grants/",
+            "Section 202 Supportive Housing for the Elderly": "https://kpcbedge.com/apply-for-section-202/",
+            "SNAP (Food Stamps)": "https://kpcbedge.com/snap-how-it-works/",
+            "Social Security Disability Insurance (SSDI)": "https://kpcbedge.com/ssdi-and-ssi/",
+            "Housing Choice Voucher (Section 8) for Seniors": "https://kpcbedge.com/seniors-applying-housing-choice-vouchers/",
+            "Energy Assistance": "https://kpcbedge.com/energy-assistance-for-the-low-income/"
+          };
+          
+          if (links[item]) {
+            output += `<li><a href="${links[item]}" target="_blank">${item}</a></li>`;
+          } else {
+            output += `<li>${item}</li>`;
+          }
+        });
+        output += `</ul></div>`;
+      }
+    };
+
+    // Add categories to output
+    renderCategory("Housing Assistance", housing);
+    renderCategory("Food & Nutrition", food);
+    renderCategory("Health Coverage", health);
+    renderCategory("Income & Financial Support", incomeSupport);
+    
+    if (veterans.length > 0) {
+      renderCategory("Veteran Benefits", veterans);
+    }
+    
+    renderCategory("Other Potential Opportunities", other);
+    
+    // Add disclaimer
+    output += `<p><strong>Important:</strong> This is only a preliminary assessment based on the information you provided. Actual eligibility is determined by the agencies that administer these programs.</p>`;
+    
+    // Display results
+    document.getElementById("results-content").innerHTML = output;
+    showPage("results-page");
+    
+    // Scroll to results
+    document.getElementById("results-page").scrollIntoView({ behavior: 'smooth' });
+
+  } catch (err) {
+    console.error("Benefit Finder Error:", err);
+    alert("Something went wrong. Please check your answers and try again.");
+  }
+}
+
+function resetForm() {
+  // Reset all form fields
+  document.getElementById("benefit-form").reset();
+  
+  // Clear any validation errors
+  const errorMessages = document.querySelectorAll(".error-message");
+  errorMessages.forEach(message => {
+    message.style.display = "none";
+  });
+  
+  // Show first page
+  showPage("page1");
+  
+  // Show navigation buttons
+  document.getElementById("nav-buttons").style.display = "block";
+  
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function backToForm() {
+  // Go back to page 2 (keeping the entered data)
+  showPage("page2");
+}
+  </script>
+ </body>
+</html>
