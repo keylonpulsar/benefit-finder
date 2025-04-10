@@ -1017,5 +1017,14 @@ function backToForm() {
   showPage("page2");
 }
   </script>
+  <script>
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    parent.postMessage({ type: "resize", height: height }, "*");
+  }
+
+  window.onload = sendHeight;
+  window.onresize = sendHeight;
+</script>
  </body>
 </html>
